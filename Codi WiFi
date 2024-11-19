@@ -1,0 +1,51 @@
+#include <Wire.h>
+#include <WiFi.h> // Librería para la conexión WiFi
+
+// Datos WiFi
+const char* ssid = "AP_asix";
+const char* password = "AP_asix2023";
+
+void setup() {
+ 
+  // Configura la comunicación I2C
+  Wire.begin(21, 22); // Pines SDA = 21, SCL = 22
+  Serial.begin(115200);
+
+  // Inicializa la pantalla OLED con la dirección I2C 0x3C
+  if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("No se puede iniciar la pantalla OLED SSD1306"));
+    while (1);
+  }
+
+  // Conexión WiFi
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setCursor(0, 0);
+  oled.setTextColor(WHITE); //Cambiar el texto al color blanco para que se vea en la pantalla
+  oled.println("Conectando a Wifi...");
+  oled.display();
+
+  WiFi.begin(ssid, password); //Inicia la conexión WiFi
+  while (WiFi.status() != WL_CONNECTED) { //Hacemos un bucle que hasta que no sea igual a WL_CONNECTED se ejecute.
+    delay(500);
+    Serial.print(".");
+    oled.print(".");
+    oled.display(); //Actualiza la pantalla OLED para mostrar los cambios realizados
+  }
+
+  // Una vez conectado, mostrar el SSID y la dirección IP
+  oled.clearDisplay();
+  oled.setCursor(0, 0);
+  oled.println("Conectado!");
+  oled.println("");
+  oled.println("Red:");
+  oled.println(ssid);
+  oled.println("");
+  oled.print("IP: ");
+  oled.println(WiFi.localIP()); // Mostrar la dirección IP
+  oled.display();
+}
+
+void loop() {
+  // Bucle principal, puedes añadir más funcionalidades aquí si lo deseas
+}

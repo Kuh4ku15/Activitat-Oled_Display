@@ -93,7 +93,7 @@ void setup() {
   oled.drawBitmap(0, 0, logo, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE); //Esta función toma los datos del bitmap y los dibuja en la pantalla OLED
   oled.display();
   delay(3000); // Esperar 3 segundos para visualizar el logo
-
+}
 void loop() {
   // Bucle principal, puedes añadir más funcionalidades aquí si lo deseas
 }
